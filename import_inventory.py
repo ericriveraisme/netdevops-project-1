@@ -1,9 +1,14 @@
+import os
+from dotenv import load_dotenv
 import pynetbox
-import csv
 
-# Initialize connection (Using your Token)
-nb = pynetbox.api(url='http://localhost:8000', token='23fda4e3dcc86066e9cb2f6ecaa4f78f2be74e65')
+# Load the variables from the .env file
+load_dotenv()
 
+nb = pynetbox.api(
+    url=os.getenv('NETBOX_URL'),
+    token=os.getenv('NETBOX_TOKEN')
+)
 def get_or_create_site(site_name):
     site = nb.dcim.sites.get(name=site_name)
     if not site:
